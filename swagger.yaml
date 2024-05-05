@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Açık Kaynak Kodlu Yazılımlar Ödev API
+  description: Açık Kaynak Kodlu Yazılımlar Ödev için REST API
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+paths:
+  /item/list:
+    get:
+      summary: Tüm öğeleri listele
+      operationId: getItems
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+  /item/get/{id}:
+    get:
+      summary: Belirli bir öğeyi al
+      operationId: getItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+  /item/post:
+    post:
+      summary: Yeni bir öğe oluştur
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: OK
+  /item/update/{id}:
+    put:
+      summary: Mevcut bir öğeyi güncelle
+      operationId: updateItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Bir öğeyi sil
+      operationId: deleteItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
